@@ -1,0 +1,87 @@
+#include <stdio.h>
+
+struct node
+{
+    int val;
+    struct node *next;
+};
+
+void begin(struct node *head, struct node *newhead)
+{
+    newhead->next=head;
+}
+
+void medio(struct node *newhead, struct node *middle, int tam)
+{
+    tam=tam/2;
+    while(tam-1>0)
+    {
+        newhead=newhead->next;
+        tam--;
+    }
+    middle->next=newhead->next->next;
+    newhead->next=middle;
+}
+void concatenar(struct node * newhead, struct node *cadena)
+{
+
+    struct node *temp;
+    temp=malloc(sizeof(struct node));
+    temp=newhead;
+    while(temp!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next= cadena;
+}
+void linklist(struct node *head, int n)
+{
+    struct node *prev, *cur;
+    head -> val = 1;
+    int i;
+    prev = head;
+    for(i=2;i<= n;i++)
+    {
+        cur = malloc(sizeof(struct node));
+        cur ->val = i;
+        prev ->next = cur;
+        prev = cur;
+    }
+    prev -> next=NULL;
+
+}
+int tama(struct node *newhead)
+{
+    int tama=0;
+    while(newhead!=NULL)
+    {
+        newhead = newhead->next;
+        tama++;
+    }
+    return tama;
+}
+
+int main()
+{
+    int tam;
+    struct node *head,*newhead,*t, *middle, *cadena, *temp;
+    head = malloc(sizeof(struct node));
+    linklist(head,8);
+    newhead=malloc(sizeof(struct node));
+    newhead -> val= 9;
+    cadena=malloc(sizeof(struct node));
+    linklist(cadena, 4);
+    begin(head, newhead);
+    tam = tama(newhead);
+    printf("%d",tam);
+    middle=malloc(sizeof(struct node));
+    middle->val=10;
+    medio(newhead, middle, tam);
+    concatenar(newhead, cadena);
+    t=newhead;
+    while (t!=NULL)
+    {
+        printf("%d\n",t->val);
+        t = t -> next;
+    }
+}
